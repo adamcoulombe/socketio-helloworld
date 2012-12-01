@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" ></script>
+
+<script>
+
+  var socket = io.connect('http://localhost');
+		
+  socket.on('greeting', function (data) {
+
+	$(function(){
+		$('#welcomeMessage').html(data.message );
+	});
+
+  });
+  
+  socket.on('update page', function (data) {
+	  	$(function(){
+			$('#page').append(data.message);
+		});
+  });
+  
+ $(function(){
+	$('#clicker').click(function(){
+		socket.emit('clicker clicked', { myname: 'adam' });
+	});
+ });
+</script>
+</head>
+
+<body>
+<div id="welcomeMessage"></div>
+<div id="page"></div>
+<a id="clicker">clicked</a>
+</body>
+</html>
+
+
