@@ -9,10 +9,9 @@ server.listen(port, function() {
 });
 
 
-if(db){
-	console.log("there is a DB");
+
 	console.log(process.env.MONGOHQ_URL);
-}
+
 
 
 app.get('/', function (req, res) {
