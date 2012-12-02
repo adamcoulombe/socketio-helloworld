@@ -9,8 +9,9 @@ server.listen(port, function() {
 });
 
 
-
+console.log("************************************");
 	console.log(process.env.MONGOHQ_URL);
+console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 
 
 
