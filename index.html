@@ -9,33 +9,43 @@
 <script>
 
   var socket = io.connect(window.location.hostname);
-		
-  socket.on('greeting', function (data) {
+  
+$(function(){	
+	$('#clicker').hide();
+});
+
+  socket.on('connection established', function (data) {
 
 	$(function(){
+		
 		$('#welcomeMessage').html(data.message );
+		
+		$('#loading').hide();
+		$('#clicker').show();
+		
+		$('#clicker').click(function(){
+			socket.emit('clicker clicked', { myname: 'adam' });
+		});
 	});
 
   });
-  
+
+
   socket.on('update page', function (data) {
 	  	$(function(){
 			$('#page').append(data.message);
 		});
   });
   
- $(function(){
-	$('#clicker').click(function(){
-		socket.emit('clicker clicked', { myname: 'adam' });
-	});
- });
+
 </script>
 </head>
 
 <body>
 <div id="welcomeMessage"></div>
 <div id="page"></div>
-<a id="clicker">clicked</a>
+<div id="loading">loading...</div>
+<a id="clicker">click me!</a>
 </body>
 </html>
 

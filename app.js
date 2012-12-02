@@ -16,7 +16,8 @@ app.get('/', function (req, res) {
 
 io.sockets.on('connection', function (socket) {
 	
-  socket.emit('greeting', { message: 'welcome' });
+  socket.emit('connection established', { message: 'welcome' });
+
 
   
   socket.on('clicker clicked', function (data) {
