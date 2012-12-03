@@ -11,7 +11,7 @@
   var socket = io.connect(window.location.hostname);
   
 $(function(){	
-	$('#clicker').hide();
+	$('#content').hide();
 });
 
   socket.on('connection established', function (data) {
@@ -21,10 +21,11 @@ $(function(){
 		$('#welcomeMessage').html(data.message );
 		
 		$('#loading').hide();
-		$('#clicker').show();
+		$('#content').show();
 		
 		$('#clicker').click(function(){
-			socket.emit('clicker clicked', { myname: 'adam' });
+			socket.emit('clicker clicked', { term: $("#term").val() });
+			$("#term").val('');
 		});
 	});
 
@@ -33,7 +34,12 @@ $(function(){
 
   socket.on('update page', function (data) {
 	  	$(function(){
-			$('#page').append(data.message);
+			$("#page").html('');
+			$.each(data.terms,function(i,v){
+				var li = $("<li/>").html(v).click(function(){
+					socket.emit('term clicked', { term: v });
+				}).appendTo("#page");
+			});
 		});
   });
   
@@ -45,7 +51,12 @@ $(function(){
 <div id="welcomeMessage"></div>
 <div id="page"></div>
 <div id="loading">loading...</div>
-<a id="clicker">click me!</a>
+<div id="content">
+
+	<input id="term" type="text">
+	<a id="clicker">click me!</a>
+    
+</div>
 </body>
 </html>
 
